@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChemistryFan.by — Репетитор по химии Елена</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Nunito:wght@400;600;700;800;900&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --neon-green: #39FF14;
+  --neon-cyan: #00F5FF;
+  --neon-magenta: #FF00E4;
+  --neon-yellow: #FFE600;
+  --neon-orange: #FF6B00;
+  --bg-dark: #0A0E1A;
+  --bg-card: rgba(255,255,255,0.04);
+  --text: #E8EAF0;
+  --text-muted: #8B90A5;
+  --glass: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg-dark);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-dark); }
+::-webkit-scrollbar-thumb { background: var(--neon-green); border-radius: 4px; }
+
+/* ===== GLOBAL GLOW BACKGROUND ===== */
+.glow-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.15;
+  animation: orbFloat 20s ease-in-out infinite;
+}
+.glow-orb:nth-child(1) { width: 600px; height: 600px; background: var(--neon-green); top: -10%; left: -10%; animation-delay: 0s; }
+.glow-orb:nth-child(2) { width: 500px; height: 500px; background: var(--neon-magenta); top: 30%; right: -15%; animation-delay: -7s; }
+.glow-orb:nth-child(3) { width: 700px; height: 700px; background: var(--neon-cyan); bottom: -20%; left: 20%; animation-delay: -14s; }
+.glow-orb:nth-child(4) { width: 400px; height: 400px; background: var(--neon-yellow); top: 60%; left: -10%; animation-delay: -3s; }
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(60px, -40px) scale(1.1); }
+  66% { transform: translate(-30px, 50px) scale(0.9); }
+}
+
+/* ===== FLOATING BUBBLES ===== */
+.bubbles-container {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+.bubble {
+  position: absolute;
+  bottom: -80px;
+  border-radius: 50%;
+  opacity: 0;
+  animation: bubbleRise linear infinite;
+}
+@keyframes bubbleRise {
+  0% { transform: translateX(0) scale(0.4); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.3; }
+  100% { transform: translateX(var(--drift)) translateY(-110vh) scale(1); opacity: 0; }
+}
+
+/* ===== NAVBAR ===== */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 16px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10, 14, 26, 0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  transition: all 0.3s ease;
+}
+nav.scrolled {
+  padding: 10px 40px;
+  background: rgba(10, 14, 26, 0.92);
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Dela Gothic One', sans-serif;
+  font-size: 1.3rem;
+  text-decoration: none;
+  color: var(--text);
+}
+.nav-logo .flask-icon {
+  font-size: 1.8rem;
+  animation: flaskWobble 3s ease-in-out infinite;
+}
+@keyframes flaskWobble {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+.nav-logo span { color: var(--neon-green); }
+.nav-links { display: flex; gap: 30px; align-items: center; }
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  transition: color 0.3s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 2px;
+  background: var(--neon-green);
+  transition: width 0.3s;
+  box-shadow: 0 0 8px var(--neon-green);
+}
+.nav-links a:hover { color: var(--neon-green); }
+.nav-links a:hover::after { width: 100%; }
+
+.nav-cta {
+  background: var(--neon-green) !important;
+  color: var(--bg-dark) !important;
+  padding: 10px 24px;
+  border-radius: 50px;
+  font-weight: 800 !important;
+  transition: all 0.3s !important;
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
+}
+.nav-cta:hover {
+  box-shadow: 0 0 30px rgba(57, 255, 20, 0.6);
+  transform: scale(1.05);
+}
+.nav-cta::after { display: none !important; }
+
+/* ===== BURGER MENU ===== */
+.burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; z-index: 1001; }
+.burger span { width: 28px; height: 3px; background: var(--text); border-radius: 2px; transition: 0.3s; }
+
+/* ===== HERO ===== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 40px 80px;
+  z-index: 2;
+}
+.hero-content {
+  text-align: center;
+  max-width: 900px;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 50px;
+  padding: 8px 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--neon-cyan);
+  margin-bottom: 30px;
+  animation: fadeSlideUp 0.8s ease-out;
+}
+.hero-badge .pulse {
+  width: 8px; height: 8px;
+  background: var(--neon-green);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(57,255,20,0.5); }
+  50% { box-shadow: 0 0 0 8px rgba(57,255,20,0); }
+}
+
+.hero h1 {
+  font-family: 'Dela Gothic One', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1.1;
+  margin-bottom: 24px;
+  animation: fadeSlideUp 0.8s ease-out 0.2s both;
+}
+.hero h1 .highlight {
+  background: linear-gradient(135deg, var(--neon-green), var(--neon-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+.hero p.sub {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto 40px;
+  font-weight: 600;
+  animation: fadeSlideUp 0.8s ease-out 0.4s both;
+}
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeSlideUp 0.8s ease-out 0.6s both;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--neon-green), #00E676);
+  color: var(--bg-dark);
+  padding: 16px 36px;
+  border-radius: 60px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 1.05rem;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s;
+  box-shadow: 0 4px 30px rgba(57,255,20,0.3);
+}
+.btn-primary:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 40px rgba(57,255,20,0.5);
+}
+.btn-secondary {
+  background: var(--glass);
+  color: var(--text);
+  padding: 16px 36px;
+  border-radius: 60px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 1.05rem;
+  border: 1px solid var(--glass-border);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s;
+  backdrop-filter: blur(10px);
+}
+.btn-secondary:hover {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 20px rgba(0,245,255,0.2);
+  transform: translateY(-3px);
+}
+
+/* ===== 3D FLOATING TEST TUBES ===== */
+.hero-lab {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  perspective: 1000px;
+}
+.flask-3d {
+  position: absolute;
+  font-size: 3rem;
+  animation: float3d 6s ease-in-out infinite;
+  filter: drop-shadow(0 0 15px var(--glow-color));
+  transform-style: preserve-3d;
+}
+.flask-3d:nth-child(1) { top: 15%; left: 8%; --glow-color: var(--neon-green); animation-delay: 0s; font-size: 4rem; }
+.flask-3d:nth-child(2) { top: 25%; right: 10%; --glow-color: var(--neon-magenta); animation-delay: -2s; font-size: 3.5rem; }
+.flask-3d:nth-child(3) { bottom: 25%; left: 12%; --glow-color: var(--neon-cyan); animation-delay: -4s; font-size: 3rem; }
+.flask-3d:nth-child(4) { bottom: 20%; right: 8%; --glow-color: var(--neon-yellow); animation-delay: -1s; font-size: 3.8rem; }
+.flask-3d:nth-child(5) { top: 40%; left: 3%; --glow-color: var(--neon-orange); animation-delay: -3s; font-size: 2.5rem; }
+.flask-3d:nth-child(6) { top: 10%; right: 25%; --glow-color: var(--neon-green); animation-delay: -5s; font-size: 2.8rem; }
+.flask-3d:nth-child(7) { bottom: 35%; right: 20%; --glow-color: var(--neon-cyan); animation-delay: -1.5s; font-size: 2.2rem; }
+.flask-3d:nth-child(8) { top: 55%; right: 3%; --glow-color: var(--neon-magenta); animation-delay: -4.5s; font-size: 3.2rem; }
+
+@keyframes float3d {
+  0%, 100% { transform: translateY(0) rotateY(0deg) rotateX(0deg); }
+  25% { transform: translateY(-20px) rotateY(15deg) rotateX(10deg); }
+  50% { transform: translateY(-35px) rotateY(-10deg) rotateX(-5deg); }
+  75% { transform: translateY(-15px) rotateY(8deg) rotateX(8deg); }
+}
+
+/* ===== PERIODIC TABLE STRIP ===== */
+.periodic-strip {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  padding: 20px 0;
+  background: rgba(57,255,20,0.03);
+  border-top: 1px solid rgba(57,255,20,0.1);
+  border-bottom: 1px solid rgba(57,255,20,0.1);
+}
+.periodic-track {
+  display: flex;
+  gap: 12px;
+  animation: scrollStrip 30s linear infinite;
+  width: max-content;
+}
+.periodic-el {
+  flex-shrink: 0;
+  width: 70px; height: 80px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  cursor: default;
+}
+.periodic-el:hover {
+  border-color: var(--neon-green);
+  transform: scale(1.15);
+  box-shadow: 0 0 20px rgba(57,255,20,0.3);
+}
+.periodic-el .number { font-size: 0.55rem; color: var(--text-muted); }
+.periodic-el .symbol { font-family: 'Dela Gothic One', sans-serif; font-size: 1.4rem; color: var(--neon-green); }
+.periodic-el .name { font-size: 0.5rem; color: var(--text-muted); letter-spacing: 0.5px; }
+
+@keyframes scrollStrip {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ===== SECTIONS COMMON ===== */
+section {
+  position: relative;
+  z-index: 2;
+  padding: 100px 40px;
+}
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--neon-cyan);
+  margin-bottom: 16px;
+}
+.section-label::before {
+  content: '';
+  width: 30px; height: 2px;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 8px var(--neon-cyan);
+}
+.section-title {
+  font-family: 'Dela Gothic One', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+.section-subtitle {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  max-width: 600px;
+  font-weight: 600;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ===== ABOUT SECTION ===== */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  margin-top: 50px;
+}
+.about-photo-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.about-photo {
+  width: 320px; height: 380px;
+  background: linear-gradient(135deg, var(--neon-green), var(--neon-cyan));
+  border-radius: 30px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(57,255,20,0.15);
+}
+.about-photo-inner {
+  width: 100%; height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8rem;
+  background: linear-gradient(135deg, rgba(0,0,0,0.1), transparent);
+}
+.about-photo-decor {
+  position: absolute;
+  width: 80px; height: 80px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  backdrop-filter: blur(10px);
+  animation: decorFloat 4s ease-in-out infinite;
+}
+.about-photo-decor:nth-child(2) {
+  top: -20px; right: -20px;
+  background: rgba(255,0,228,0.15);
+  border: 1px solid rgba(255,0,228,0.3);
+  animation-delay: -1s;
+}
+.about-photo-decor:nth-child(3) {
+  bottom: -15px; left: -25px;
+  background: rgba(0,245,255,0.15);
+  border: 1px solid rgba(0,245,255,0.3);
+  animation-delay: -2s;
+}
+.about-photo-decor:nth-child(4) {
+  bottom: 40px; right: -30px;
+  background: rgba(255,230,0,0.15);
+  border: 1px solid rgba(255,230,0,0.3);
+  animation-delay: -0.5s;
+}
+@keyframes decorFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 30px;
+}
+.stat-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 20px 16px;
+  text-align: center;
+  transition: all 0.3s;
+}
+.stat-card:hover {
+  border-color: var(--neon-green);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(57,255,20,0.1);
+}
+.stat-number {
+  font-family: 'Dela Gothic One', sans-serif;
+  font-size: 1.8rem;
+  color: var(--neon-green);
+  display: block;
+}
+.stat-label { font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-top: 4px; }
+
+/* ===== FEATURES / WHY SECTION ===== */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 50px;
+}
+.feature-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 36px 28px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg, var(--accent1), var(--accent2));
+  transform: scaleX(0);
+  transition: transform 0.4s;
+  transform-origin: left;
+}
+.feature-card:hover::before { transform: scaleX(1); }
+.feature-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255,255,255,0.15);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+.feature-card:nth-child(1) { --accent1: var(--neon-green); --accent2: var(--neon-cyan); }
+.feature-card:nth-child(2) { --accent1: var(--neon-magenta); --accent2: var(--neon-yellow); }
+.feature-card:nth-child(3) { --accent1: var(--neon-cyan); --accent2: var(--neon-green); }
+.feature-card:nth-child(4) { --accent1: var(--neon-yellow); --accent2: var(--neon-orange); }
+.feature-card:nth-child(5) { --accent1: var(--neon-orange); --accent2: var(--neon-magenta); }
+.feature-card:nth-child(6) { --accent1: var(--neon-green); --accent2: var(--neon-yellow); }
+
+.feature-icon {
+  width: 60px; height: 60px;
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+.feature-card h3 {
+  font-weight: 900;
+  font-size: 1.15rem;
+  margin-bottom: 10px;
+}
+.feature-card p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* ===== PROGRAM SECTION ===== */
+.program-tabs {
+  display: flex;
+  gap: 8px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+.program-tab {
+  padding: 12px 28px;
+  border-radius: 50px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass);
+  color: var(--text-muted);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.program-tab:hover, .program-tab.active {
+  background: var(--neon-green);
+  color: var(--bg-dark);
+  border-color: var(--neon-green);
+  box-shadow: 0 0 20px rgba(57,255,20,0.3);
+}
+
+.program-content {
+  margin-top: 30px;
+}
+.program-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+.program-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 30px;
+  transition: all 0.3s;
+  position: relative;
+}
+.program-card:hover {
+  border-color: var(--neon-cyan);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0,245,255,0.1);
+}
+.program-card .class-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+.program-card:nth-child(1) .class-badge { background: rgba(57,255,20,0.15); color: var(--neon-green); }
+.program-card:nth-child(2) .class-badge { background: rgba(0,245,255,0.15); color: var(--neon-cyan); }
+.program-card:nth-child(3) .class-badge { background: rgba(255,0,228,0.15); color: var(--neon-magenta); }
+.program-card:nth-child(4) .class-badge { background: rgba(255,230,0,0.15); color: var(--neon-yellow); }
+
+.program-card h3 { font-weight: 900; margin-bottom: 10px; font-size: 1.1rem; }
+.program-card ul {
+  list-style: none;
+  padding: 0;
+}
+.program-card ul li {
+  padding: 6px 0;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.program-card ul li::before {
+  content: '⚗️';
+  font-size: 0.7rem;
+}
+
+/* ===== PRICING ===== */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 50px;
+}
+.pricing-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 40px 30px;
+  text-align: center;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+.pricing-card.popular {
+  border-color: var(--neon-green);
+  box-shadow: 0 0 40px rgba(57,255,20,0.1);
+}
+.pricing-card.popular::before {
+  content: 'ПОПУЛЯРНО';
+  position: absolute;
+  top: 16px; right: -30px;
+  background: var(--neon-green);
+  color: var(--bg-dark);
+  padding: 4px 40px;
+  font-size: 0.65rem;
+  font-weight: 900;
+  transform: rotate(45deg);
+  letter-spacing: 1px;
+}
+.pricing-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+.pricing-icon {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+.pricing-card h3 {
+  font-weight: 900;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+.pricing-card .price {
+  font-family: 'Dela Gothic One', sans-serif;
+  font-size: 2.5rem;
+  color: var(--neon-green);
+  margin: 16px 0;
+}
+.pricing-card .price small {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-family: 'Nunito', sans-serif;
+}
+.pricing-features {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 30px;
+  text-align: left;
+}
+.pricing-features li {
+  padding: 8px 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pricing-features li .check {
+  color: var(--neon-green);
+  font-weight: 900;
+}
+
+.btn-pricing {
+  width: 100%;
+  padding: 14px;
+  border-radius: 50px;
+  border: 2px solid var(--neon-green);
+  background: transparent;
+  color: var(--neon-green);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-pricing:hover {
+  background: var(--neon-green);
+  color: var(--bg-dark);
+  box-shadow: 0 0 25px rgba(57,255,20,0.4);
+}
+.pricing-card.popular .btn-pricing {
+  background: var(--neon-green);
+  color: var(--bg-dark);
+}
+.pricing-card.popular .btn-pricing:hover {
+  box-shadow: 0 0 30px rgba(57,255,20,0.5);
+  transform: scale(1.03);
+}
+
+/* ===== TESTIMONIALS ===== */
+.testimonials-track {
+  display: flex;
+  gap: 24px;
+  margin-top: 50px;
+  overflow-x: auto;
+  padding-bottom: 20px;
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.testimonials-track::-webkit-scrollbar { display: none; }
+.testimonial-card {
+  flex: 0 0 350px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 30px;
+  scroll-snap-align: start;
+  transition: all 0.3s;
+}
+.testimonial-card:hover {
+  border-color: rgba(255,255,255,0.15);
+  transform: translateY(-5px);
+}
+.testimonial-stars { color: var(--neon-yellow); font-size: 0.9rem; margin-bottom: 14px; letter-spacing: 2px; }
+.testimonial-text {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.testimonial-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--neon-green), var(--neon-cyan));
+  color: var(--bg-dark);
+}
+.testimonial-name { font-weight: 800; font-size: 0.9rem; }
+.testimonial-role { font-size: 0.75rem; color: var(--text-muted); }
+
+/* ===== CTA / FORM ===== */
+.cta-section {
+  background: linear-gradient(135deg, rgba(57,255,20,0.05), rgba(0,245,255,0.05));
+  border-top: 1px solid rgba(57,255,20,0.1);
+  border-bottom: 1px solid rgba(0,245,255,0.1);
+}
+.cta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.cta-form {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 40px;
+}
+.form-group {
+  margin-bottom: 20px;
+}
+.form-group label {
+  display: block;
+  font-weight: 800;
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+  color: var(--text-muted);
+}
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.03);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s;
+  outline: none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: var(--neon-green);
+  box-shadow: 0 0 15px rgba(57,255,20,0.15);
+}
+.form-group textarea { resize: vertical; min-height: 100px; }
+.form-group select option { background: var(--bg-dark); }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.btn-submit {
+  width: 100%;
+  padding: 16px;
+  border-radius: 50px;
+  border: none;
+  background: linear-gradient(135deg, var(--neon-green), #00E676);
+  color: var(--bg-dark);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 25px rgba(57,255,20,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-submit:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 35px rgba(57,255,20,0.5);
+}
+
+/* ===== MOLECULE DECORATION ===== */
+.molecule-deco {
+  position: absolute;
+  font-size: 12rem;
+  opacity: 0.03;
+  font-family: 'Dela Gothic One', sans-serif;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  position: relative;
+  z-index: 2;
+  padding: 60px 40px 30px;
+  border-top: 1px solid var(--glass-border);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.footer-brand .nav-logo { margin-bottom: 16px; }
+.footer-desc { color: var(--text-muted); font-size: 0.88rem; line-height: 1.7; max-width: 300px; }
+.footer-col h4 { font-weight: 900; font-size: 0.85rem; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
+.footer-col a {
+  display: block;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.88rem;
+  padding: 4px 0;
+  transition: color 0.3s;
+}
+.footer-col a:hover { color: var(--neon-green); }
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 40px auto 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--glass-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.footer-socials { display: flex; gap: 12px; }
+.footer-socials a {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+.footer-socials a:hover {
+  border-color: var(--neon-green);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(57,255,20,0.2);
+}
+
+/* ===== ANIMATED FORMULA BAR ===== */
+.formula-bar {
+  position: relative;
+  z-index: 2;
+  padding: 24px 0;
+  overflow: hidden;
+  background: var(--glass);
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+}
+.formula-track {
+  display: flex;
+  gap: 60px;
+  animation: scrollFormula 25s linear infinite;
+  width: max-content;
+  font-family: 'Caveat', cursive;
+  font-size: 1.6rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+@keyframes scrollFormula {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ===== SCROLL ANIMATIONS ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== MODAL ===== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(10,14,26,0.9);
+  backdrop-filter: blur(10px);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: #12172A;
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 50px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  animation: modalIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes modalIn {
+  from { transform: scale(0.8) translateY(30px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+.modal h2 { font-family: 'Dela Gothic One', sans-serif; font-size: 1.8rem; margin: 16px 0; }
+.modal p { color: var(--text-muted); margin-bottom: 24px; }
+.modal-icon { font-size: 4rem; }
+.modal-close {
+  background: var(--neon-green);
+  color: var(--bg-dark);
+  border: none;
+  padding: 12px 32px;
+  border-radius: 50px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.modal-close:hover { box-shadow: 0 0 20px rgba(57,255,20,0.4); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .features-grid, .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-grid, .cta-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  section { padding: 60px 20px; }
+  nav { padding: 12px 20px; }
+  .nav-links { 
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100vh;
+    background: rgba(10,14,26,0.97);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+  }
+  .nav-links.open { display: flex; }
+  .burger { display: flex; }
+  .features-grid, .pricing-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .hero { padding: 100px 20px 60px; }
+  .hero h1 { font-size: 2.2rem; }
+  .about-stats { grid-template-columns: repeat(3, 1fr); }
+  .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+  .footer-bottom { flex-direction: column; gap: 16px; }
+  .flask-3d { display: none; }
+}
+@media (max-width: 480px) {
+  .about-photo { width: 260px; height: 300px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Background Glow -->
+<div class="glow-bg">
+  <div class="glow-orb"></div>
+  <div class="glow-orb"></div>
+  <div class="glow-orb"></div>
+  <div class="glow-orb"></div>
+</div>
+
+<!-- Floating Bubbles -->
+<div class="bubbles-container" id="bubbles"></div>
+
+<!-- Navbar -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <span class="flask-icon">🧪</span>
+    Chemistry<span>Fan</span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="#about">О репетиторе</a>
+    <a href="#features">Преимущества</a>
+    <a href="#program">Программа</a>
+    <a href="#pricing">Стоимость</a>
+    <a href="#reviews">Отзывы</a>
+    <a href="#contact" class="nav-cta">Записаться</a>
+  </div>
+  <div class="burger" id="burger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+  <div class="hero-lab">
+    <div class="flask-3d">🧪</div>
+    <div class="flask-3d">⚗️</div>
+    <div class="flask-3d">🔬</div>
+    <div class="flask-3d">🧫</div>
+    <div class="flask-3d">💊</div>
+    <div class="flask-3d">🧬</div>
+    <div class="flask-3d">⚛️</div>
+    <div class="flask-3d">🔭</div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="pulse"></div>
+      Набор открыт на 2025/2026 учебный год
+    </div>
+    <h1>Химия — это <span class="highlight">суперсила!</span></h1>
+    <p class="sub">Репетитор Елена поможет полюбить химию, подтянуть оценки и сдать ЦТ на высший балл. Программа по учебному плану Беларуси 🇧🇾</p>
+    <div class="hero-buttons">
+      <a href="#contact" class="btn-primary">🚀 Записаться на урок</a>
+      <a href="#program" class="btn-secondary">📚 Посмотреть программу</a>
+    </div>
+  </div>
+</section>
+
+<!-- Periodic Table Strip -->
+<div class="periodic-strip">
+  <div class="periodic-track" id="periodicTrack"></div>
+</div>
+
+<!-- About Section -->
+<section id="about">
+  <div class="container">
+    <div class="section-label reveal">О репетиторе</div>
+    <div class="about-grid">
+      <div class="about-photo-wrapper reveal">
+        <div class="about-photo">
+          <div class="about-photo-inner">👩‍🔬</div>
+        </div>
+        <div class="about-photo-decor">🧪</div>
+        <div class="about-photo-decor">⚗️</div>
+        <div class="about-photo-decor">💡</div>
+      </div>
+      <div class="about-info reveal">
+        <div class="section-title">Елена — ваш проводник в мир химии</div>
+        <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.8; margin-bottom: 10px;">
+          Привет! Я Елена — репетитор по химии с многолетним опытом подготовки школьников. Моя цель — не просто натаскать на экзамен, а по-настоящему влюбить в предмет. Занятия строю по белорусской программе, с упором на понимание, а не зубрёжку.
+        </p>
+        <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.8;">
+          Каждый ученик уникален — поэтому я подбираю индивидуальный подход: от интерактивных экспериментов до визуальных схем и мнемоники. Химия — это не страшно, это увлекательно!
+        </p>
+        <div class="about-stats">
+          <div class="stat-card">
+            <span class="stat-number">10+</span>
+            <span class="stat-label">Лет опыта</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">500+</span>
+            <span class="stat-label">Учеников</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">95%</span>
+            <span class="stat-label">Сдали ЦТ 70+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Formula Bar -->
+<div class="formula-bar">
+  <div class="formula-track">
+    <span>H₂O → вода жизни</span>
+    <span>NaCl — поваренная соль</span>
+    <span>2H₂ + O₂ → 2H₂O</span>
+    <span>C₆H₁₂O₆ — глюкоза</span>
+    <span>Fe + CuSO₄ → FeSO₄ + Cu</span>
+    <span>pH = −lg[H⁺]</span>
+    <span>E = mc²</span>
+    <span>CaCO₃ → CaO + CO₂</span>
+    <span>CH₃COOH — уксусная кислота</span>
+    <span>H₂SO₄ — серная кислота</span>
+    <!-- Duplicate for seamless loop -->
+    <span>H₂O → вода жизни</span>
+    <span>NaCl — поваренная соль</span>
+    <span>2H₂ + O₂ → 2H₂O</span>
+    <span>C₆H₁₂O₆ — глюкоза</span>
+    <span>Fe + CuSO₄ → FeSO₄ + Cu</span>
+    <span>pH = −lg[H⁺]</span>
+    <span>E = mc²</span>
+    <span>CaCO₃ → CaO + CO₂</span>
+    <span>CH₃COOH — уксусная кислота</span>
+    <span>H₂SO₄ — серная кислота</span>
+  </div>
+</div>
+
+<!-- Features -->
+<section id="features">
+  <div class="container">
+    <div class="section-label reveal">Почему я</div>
+    <div class="section-title reveal">Не просто уроки, <br>а путешествие в науку</div>
+    <div class="section-subtitle reveal">Каждое занятие — это маленькое открытие</div>
+    
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon">🎯</div>
+        <h3>Индивидуальный план</h3>
+        <p>Каждый ученик получает персональную программу, исходя из уровня знаний и целей — будь то школьная оценка или 100 баллов на ЦТ.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">🧪</div>
+        <h3>Эксперименты онлайн</h3>
+        <p>Виртуальные лабораторные, 3D-модели молекул, интерактивные симуляции — химия оживает прямо на экране.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">📱</div>
+        <h3>Удобный формат</h3>
+        <p>Занятия онлайн или очно в Минске. Гибкий график: утро, день, вечер — подстраиваюсь под школьное расписание.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">📝</div>
+        <h3>Программа Беларуси</h3>
+        <p>Все темы строго по учебному плану Республики Беларусь. Готовлю к школьным контрольным, олимпиадам и ЦТ.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">🏆</div>
+        <h3>Результат гарантирован</h3>
+        <p>95% учеников улучшают оценки уже через месяц. Регулярные тесты и отчёты для родителей.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">💬</div>
+        <h3>Поддержка 24/7</h3>
+        <p>Вопрос перед контрольной в 11 вечера? Напишите — отвечу! Всегда на связи в мессенджерах.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Program Section -->
+<section id="program" style="background: rgba(0,245,255,0.02);">
+  <div class="container">
+    <div class="section-label reveal">Программа</div>
+    <div class="section-title reveal">Учебные курсы по классам</div>
+    <div class="section-subtitle reveal">По учебному плану Республики Беларусь</div>
+    
+    <div class="program-tabs reveal">
+      <button class="program-tab active" onclick="switchTab(this, 'school')">Школьная программа</button>
+      <button class="program-tab" onclick="switchTab(this, 'ct')">Подготовка к ЦТ</button>
+      <button class="program-tab" onclick="switchTab(this, 'olymp')">Олимпиады</button>
+    </div>
+
+    <div class="program-content" id="programContent">
+      <div class="program-cards" id="tab-school">
+        <div class="program-card reveal">
+          <span class="class-badge">7 класс</span>
+          <h3>Первое знакомство</h3>
+          <ul>
+            <li>Что изучает химия</li>
+            <li>Атомы и молекулы</li>
+            <li>Периодическая таблица Менделеева</li>
+            <li>Простые и сложные вещества</li>
+            <li>Химические реакции — первые опыты</li>
+          </ul>
+        </div>
+        <div class="program-card reveal">
+          <span class="class-badge">8 класс</span>
+          <h3>Основы и законы</h3>
+          <ul>
+            <li>Типы химических реакций</li>
+            <li>Растворы и растворимость</li>
+            <li>Кислоты, основания, соли</li>
+            <li>Окислительно-восстановительные реакции</li>
+            <li>Расчётные задачи</li>
+          </ul>
+        </div>
+        <div class="program-card reveal">
+          <span class="class-badge">9 класс</span>
+          <h3>Неорганическая химия</h3>
+          <ul>
+            <li>Металлы и неметаллы</li>
+            <li>Электролитическая диссоциация</li>
+            <li>Галогены, кислород, сера</li>
+            <li>Азот и фосфор</li>
+            <li>Углерод и кремний</li>
+          </ul>
+        </div>
+        <div class="program-card reveal">
+          <span class="class-badge">10–11 класс</span>
+          <h3>Органическая химия</h3>
+          <ul>
+            <li>Углеводороды</li>
+            <li>Спирты, альдегиды, кислоты</li>
+            <li>Эфиры и жиры</li>
+            <li>Углеводы и белки</li>
+            <li>Полимеры и синтетика</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="program-cards" id="tab-ct" style="display: none;">
+        <div class="program-card reveal">
+          <span class="class-badge">Модуль 1</span>
+          <h3>Теоретические основы</h3>
+          <ul>
+            <li>Строение атома и хим. связь</li>
+            <li>Периодический закон</li>
+            <li>Классификация веществ</li>
+            <li>Номенклатура IUPAC</li>
+            <li>Электронные конфигурации</li>
+          </ul>
+        </div>
+        <div class="program-card reveal">
+          <span class="class-badge">Модуль 2</span>
+          <h3>Неорганика для ЦТ</h3>
+          <ul>
+            <li>Свойства классов веществ</li>
+            <li>Цепочки превращений</li>
+            <li>Качественные реакции</li>
+            <li>Тактика решения задач</li>
+            <li>Ловушки составителей ЦТ</li>
+          </ul>
+        </div>
+        <div class="program-card reveal">
+          <span class="class-badge">Модуль 3</span>
+          <h3>Органика для ЦТ</h3>
+          <ul>
+            <li>Изомерия и номенклатура</li>
+            <li>Механизмы реакций</li>
+            <li>Генетическая связь классов</li>
+            <li>Задачи на вывод формул</li>
+            <li>Полный разбор реальных ЦТ</li>
+          </ul>
+        </div>
+        <div class="program-card reveal">
+          <span class="class-badge">Модуль 4</span>
+          <h3>Финальная подготовка</h3>
+          <ul>
+            <li>Пробные ЦТ каждую неделю</li>
+            <li>Разбор ошибок</li>
+            <li>Тайм-менеджмент на экзамене</li>
+            <li>Психологическая подготовка</li>
+            <li>Стратегия «80+ баллов»</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="program-cards" id="tab-olymp" style="display: none;">
+        <div class="program-card reveal">
+          <span class="class-badge">Уровень 1</span>
+          <h3>Районный этап</h3>
+          <ul>
+            <li>Нестандартные задачи</li>
+            <li>Логическое мышление в химии</li>
+            <li>Задачи на смеси и сплавы</li>
+            <li>Разбор прошлых олимпиад</li>
+          </ul>
+        </div>
+        <div class="program-card reveal">
+          <span class="class-badge">Уровень 2</span>
+          <h3>Областной этап</h3>
+          <ul>
+            <li>Задачи повышенной сложности</li>
+            <li>Термохимия и кинетика</li>
+            <li>Экспериментальные задания</li>
+            <li>Подготовка к практическому туру</li>
+          </ul>
+        </div>
+        <div class="program-card reveal">
+          <span class="class-badge">Уровень 3</span>
+          <h3>Республиканский этап</h3>
+          <ul>
+            <li>Задачи международного уровня</li>
+            <li>Физическая химия</li>
+            <li>Аналитическая химия</li>
+            <li>Стратегия победы на олимпиаде</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-label reveal">Стоимость</div>
+    <div class="section-title reveal">Прозрачные цены,<br>понятные условия</div>
+    <div class="section-subtitle reveal">Первое пробное занятие — бесплатно!</div>
+
+    <div class="pricing-grid">
+      <div class="pricing-card reveal">
+        <div class="pricing-icon">🧪</div>
+        <h3>Разовое занятие</h3>
+        <div class="price">25 <small>BYN / 60 мин</small></div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> Индивидуальный урок</li>
+          <li><span class="check">✓</span> Домашнее задание</li>
+          <li><span class="check">✓</span> Поддержка в чате</li>
+          <li><span class="check">✓</span> Онлайн или очно</li>
+        </ul>
+        <button class="btn-pricing" onclick="scrollToForm()">Записаться</button>
+      </div>
+      <div class="pricing-card popular reveal">
+        <div class="pricing-icon">⚗️</div>
+        <h3>Абонемент 8 занятий</h3>
+        <div class="price">180 <small>BYN / 8 уроков</small></div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> Экономия 10%</li>
+          <li><span class="check">✓</span> План на месяц</li>
+          <li><span class="check">✓</span> Отчёт для родителей</li>
+          <li><span class="check">✓</span> Приоритетная поддержка</li>
+          <li><span class="check">✓</span> Пробный тест ЦТ</li>
+        </ul>
+        <button class="btn-pricing" onclick="scrollToForm()">Выбрать абонемент</button>
+      </div>
+      <div class="pricing-card reveal">
+        <div class="pricing-icon">🏆</div>
+        <h3>Подготовка к ЦТ</h3>
+        <div class="price">35 <small>BYN / 90 мин</small></div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> Расширенный формат</li>
+          <li><span class="check">✓</span> Разбор тестов ЦТ</li>
+          <li><span class="check">✓</span> Конспекты и шпаргалки</li>
+          <li><span class="check">✓</span> Еженедельный пробник</li>
+          <li><span class="check">✓</span> Гарантия результата</li>
+        </ul>
+        <button class="btn-pricing" onclick="scrollToForm()">Записаться на курс</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section id="reviews" style="background: rgba(255,0,228,0.02);">
+  <div class="container">
+    <div class="section-label reveal">Отзывы</div>
+    <div class="section-title reveal">Что говорят ученики<br>и их родители</div>
+    
+    <div class="testimonials-track reveal">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-text">«Дочь стала обожать химию! Раньше двойки, теперь стабильно 8-9. Елена объясняет так, что даже я понимаю 😄 Рекомендую всем!»</div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">И</div>
+          <div>
+            <div class="testimonial-name">Ирина К.</div>
+            <div class="testimonial-role">Мама ученицы, 9 класс</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-text">«Сдал ЦТ по химии на 87 баллов! Готовился с Еленой с октября, и это были самые продуктивные полгода. Системный подход и никакой воды.»</div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">Д</div>
+          <div>
+            <div class="testimonial-name">Дмитрий С.</div>
+            <div class="testimonial-role">Выпускник 2024, БГМУ</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-text">«Елена — лучший репетитор! Виртуальные эксперименты — это нечто. Сын ждёт каждое занятие с нетерпением. Наконец-то учёба в радость!»</div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">А</div>
+          <div>
+            <div class="testimonial-name">Анна М.</div>
+            <div class="testimonial-role">Мама ученика, 8 класс</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-text">«Взяла 2 место на областной олимпиаде! Без Елены бы не справилась. Она помогла разобрать самые сложные темы простым языком.»</div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">К</div>
+          <div>
+            <div class="testimonial-name">Ксения В.</div>
+            <div class="testimonial-role">Ученица, 10 класс</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-text">«Пришёл с полным нулём в 11 классе. За 4 месяца вышел на уровень 70+ по пробным ЦТ. Елена — волшебница, серьёзно.»</div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">М</div>
+          <div>
+            <div class="testimonial-name">Максим Л.</div>
+            <div class="testimonial-role">Выпускник 2024</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / Contact Form -->
+<section id="contact" class="cta-section">
+  <div class="container">
+    <div class="cta-grid">
+      <div class="reveal">
+        <div class="section-label">Запись</div>
+        <div class="section-title">Запишитесь на <span style="color: var(--neon-green);">бесплатный</span> пробный урок</div>
+        <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.8; margin-top: 16px;">
+          Оставьте заявку, и я свяжусь с вами в течение 2 часов, чтобы подобрать удобное время. Пробное занятие — 30 минут, полностью бесплатно. Познакомимся, определим уровень и составим план!
+        </p>
+        <div style="margin-top: 30px; display: flex; flex-direction: column; gap: 16px;">
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <span style="font-size: 1.5rem;">📞</span>
+            <div>
+              <div style="font-weight: 800; font-size: 0.8rem; color: var(--text-muted);">Телефон</div>
+              <div style="font-weight: 800;">+375 (29) 675-52-59</div>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <span style="font-size: 1.5rem;">📧</span>
+            <div>
+              <div style="font-weight: 800; font-size: 0.8rem; color: var(--text-muted);">Email</div>
+              <div style="font-weight: 800;">elena@chemistryfan.by</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-form reveal">
+        <h3 style="font-family: 'Dela Gothic One', sans-serif; font-size: 1.3rem; margin-bottom: 24px;">🧪 Заявка на урок</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Имя родителя / ученика</label>
+            <input type="text" placeholder="Как к вам обращаться?">
+          </div>
+          <div class="form-group">
+            <label>Телефон</label>
+            <input type="tel" placeholder="+375 (__)___-__-__">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Класс ученика</label>
+            <select>
+              <option value="">Выберите класс</option>
+              <option>7 класс</option>
+              <option>8 класс</option>
+              <option>9 класс</option>
+              <option>10 класс</option>
+              <option>11 класс</option>
+              <option>Подготовка к ЦТ</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Формат</label>
+            <select>
+              <option value="">Выберите формат</option>
+              <option>Онлайн (Zoom)</option>
+              <option>Очно (Минск)</option>
+              <option>Пока не решили</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Цель занятий</label>
+          <textarea placeholder="Подтянуть оценки, подготовиться к ЦТ, олимпиада..."></textarea>
+        </div>
+        <button class="btn-submit" onclick="submitForm()">
+          🚀 Отправить заявку
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">
+        <span class="flask-icon">🧪</span>
+        Chemistry<span>Fan</span>
+      </a>
+      <p class="footer-desc">Репетитор по химии для школьников Беларуси. Помогаю полюбить предмет и достигнуть высоких результатов.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Навигация</h4>
+      <a href="#about">О репетиторе</a>
+      <a href="#features">Преимущества</a>
+      <a href="#program">Программа</a>
+      <a href="#pricing">Стоимость</a>
+    </div>
+    <div class="footer-col">
+      <h4>Программы</h4>
+      <a href="#program">7–9 классы</a>
+      <a href="#program">10–11 классы</a>
+      <a href="#program">Подготовка к ЦТ</a>
+      <a href="#program">Олимпиады</a>
+    </div>
+    <div class="footer-col">
+      <h4>Контакты</h4>
+      <a href="#">+375 (29) 675-52-59</a>
+      <a href="#">elena@chemistryfan.by</a>
+
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 ChemistryFan.by — Все права защищены</span>
+    <div class="footer-socials">
+      <a href="#" title="Instagram">📷</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Success Modal -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal">
+    <div class="modal-icon">🎉</div>
+    <h2>Заявка отправлена!</h2>
+    <p>Спасибо за интерес к химии! Елена свяжется с вами в течение 2 часов для подбора удобного времени.</p>
+    <button class="modal-close" onclick="closeModal()">Отлично!</button>
+  </div>
+</div>
+
+<script>
+// ===== BUBBLES =====
+function createBubbles() {
+  const container = document.getElementById('bubbles');
+  const colors = ['var(--neon-green)', 'var(--neon-cyan)', 'var(--neon-magenta)', 'var(--neon-yellow)', 'var(--neon-orange)'];
+  
+  for (let i = 0; i < 25; i++) {
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    const size = Math.random() * 20 + 5;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    bubble.style.cssText = `
+      width: ${size}px; height: ${size}px;
+      left: ${Math.random() * 100}%;
+      background: ${color};
+      box-shadow: 0 0 ${size}px ${color};
+      animation-duration: ${Math.random() * 15 + 10}s;
+      animation-delay: ${Math.random() * 10}s;
+      --drift: ${(Math.random() - 0.5) * 200}px;
+    `;
+    container.appendChild(bubble);
+  }
+}
+createBubbles();
+
+// ===== PERIODIC TABLE =====
+const elements = [
+  {n:1,s:'H',name:'Водород'},{n:2,s:'He',name:'Гелий'},{n:3,s:'Li',name:'Литий'},
+  {n:4,s:'Be',name:'Бериллий'},{n:5,s:'B',name:'Бор'},{n:6,s:'C',name:'Углерод'},
+  {n:7,s:'N',name:'Азот'},{n:8,s:'O',name:'Кислород'},{n:9,s:'F',name:'Фтор'},
+  {n:10,s:'Ne',name:'Неон'},{n:11,s:'Na',name:'Натрий'},{n:12,s:'Mg',name:'Магний'},
+  {n:13,s:'Al',name:'Алюминий'},{n:14,s:'Si',name:'Кремний'},{n:15,s:'P',name:'Фосфор'},
+  {n:16,s:'S',name:'Сера'},{n:17,s:'Cl',name:'Хлор'},{n:18,s:'Ar',name:'Аргон'},
+  {n:19,s:'K',name:'Калий'},{n:20,s:'Ca',name:'Кальций'},{n:26,s:'Fe',name:'Железо'},
+  {n:29,s:'Cu',name:'Медь'},{n:30,s:'Zn',name:'Цинк'},{n:47,s:'Ag',name:'Серебро'},
+  {n:79,s:'Au',name:'Золото'},{n:80,s:'Hg',name:'Ртуть'}
+];
+
+const track = document.getElementById('periodicTrack');
+// Double for seamless loop
+[...elements, ...elements].forEach(el => {
+  const div = document.createElement('div');
+  div.className = 'periodic-el';
+  div.innerHTML = `<span class="number">${el.n}</span><span class="symbol">${el.s}</span><span class="name">${el.name}</span>`;
+  track.appendChild(div);
+});
+
+// ===== NAVBAR SCROLL =====
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ===== MOBILE MENU =====
+function toggleMenu() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+});
+
+// ===== PROGRAM TABS =====
+function switchTab(btn, tab) {
+  document.querySelectorAll('.program-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('[id^="tab-"]').forEach(c => c.style.display = 'none');
+  const target = document.getElementById('tab-' + tab);
+  target.style.display = 'grid';
+  // Re-trigger reveal animations
+  target.querySelectorAll('.reveal').forEach(el => {
+    el.classList.remove('visible');
+    setTimeout(() => el.classList.add('visible'), 50);
+  });
+}
+
+// ===== SCROLL REVEAL =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ===== FORM =====
+function scrollToForm() {
+  document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+}
+
+function submitForm() {
+  document.getElementById('successModal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('successModal').classList.remove('open');
+}
+</script>
+</body>
+</html>
